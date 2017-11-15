@@ -478,6 +478,9 @@
     <string name="swish_card_highlight_sorting_title">Want to see the top highlights?</string>
     <string name="swish_card_highlight_sorting_content">Sort highlights by popularity and unlock more awesome features with Swish Premium</string>
     <string name="swish_card_highlight_sorting_action">Explore premium</string>
+    <string name="swish_card_highlight_shortcut_title">Want to add a shortcut to highlights?</string>
+    <string name="swish_card_highlight_shortcut_content">Add a shortcut to your homescreen to directly navigate to the highlights screen</string>
+    <string name="swish_card_highlight_shortcut_action">Add shortcut</string>
     <string name="triple_doubles">Triple Doubles</string>
     <string name="quadruple_doubles">Quadruple Doubles</string>
     <string name="five_x_fives">5x5\'s</string>

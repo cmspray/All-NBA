@@ -2,7 +2,6 @@ package com.gmail.jorgegilcavazos.ballislife.data.local;
 
 import android.content.SharedPreferences;
 
-import com.gmail.jorgegilcavazos.ballislife.base.BasePresenter;
 import com.gmail.jorgegilcavazos.ballislife.features.model.HighlightViewType;
 import com.gmail.jorgegilcavazos.ballislife.features.model.SwishCard;
 import com.gmail.jorgegilcavazos.ballislife.features.model.SwishTheme;
@@ -173,7 +172,20 @@ public class AppLocalRepository implements LocalRepository {
     }
 
     @Override
-    public boolean shouldShowShortcutCard(String key) {
-        return localSharedPreferences.getInt(key, 0) >= 10;
+    public boolean shouldShowShortcutCard(SwishCard swishCard) {
+        String viewCountKey = "";
+        String hasSeenKey = "";
+        if(swishCard.getKey().equals(SwishCard.HIGHLIGHT_SHORTCUT.getKey())) {
+            viewCountKey = Constants.HIGHLIGHTS_VIEWED_COUNT_KEY;
+            hasSeenKey = Constants.HIGHLIGHT_SHORTCUT_SEEN;
+        }
+        return localSharedPreferences.getInt(viewCountKey, 0) >= 10 && !localSharedPreferences.getBoolean(hasSeenKey, false);
+    }
+
+    @Override
+    public void markShortcutSeen(String key) {
+        SharedPreferences.Editor editor = localSharedPreferences.edit();
+        editor.putBoolean(key, true /* seen */);
+        editor.apply();
     }
 }

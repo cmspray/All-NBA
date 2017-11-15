@@ -22,6 +22,11 @@ class SwishCardViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         content.text = itemView.context.getString(R.string.swish_card_highlight_sorting_content)
         actionBtn.text = itemView.context.getString(R.string.swish_card_highlight_sorting_action)
       }
+      SwishCard.HIGHLIGHT_SHORTCUT -> {
+        title.text = itemView.context.getString(R.string.swish_card_highlight_shortcut_title)
+        content.text = itemView.context.getString(R.string.swish_card_highlight_shortcut_content)
+        actionBtn.text = itemView.context.getString(R.string.swish_card_highlight_shortcut_action)
+      }
     }
   }
 }

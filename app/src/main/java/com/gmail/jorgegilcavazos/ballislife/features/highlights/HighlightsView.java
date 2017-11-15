@@ -45,9 +45,17 @@ public interface HighlightsView {
 
     Observable<Object> explorePremiumClicks();
 
-    Observable<Object> gotItClicks();
+    Observable<Object> premiumGotItClicks();
+
+    Observable<Object> shortcutClicks();
+
+    Observable<Object> shortcutGotItClicks();
 
     void openPremiumActivity();
 
+    void openShortcutActivity();
+
     void dismissSwishCard();
+
+    void dismissShortcutCard();
 }

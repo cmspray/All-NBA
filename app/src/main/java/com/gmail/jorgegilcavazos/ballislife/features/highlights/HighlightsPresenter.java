@@ -8,6 +8,7 @@ import com.gmail.jorgegilcavazos.ballislife.data.repository.highlights.Highlight
 import com.gmail.jorgegilcavazos.ballislife.features.model.Highlight;
 import com.gmail.jorgegilcavazos.ballislife.features.model.HighlightViewType;
 import com.gmail.jorgegilcavazos.ballislife.features.model.SwishCard;
+import com.gmail.jorgegilcavazos.ballislife.util.Constants;
 import com.gmail.jorgegilcavazos.ballislife.util.ErrorHandler;
 import com.gmail.jorgegilcavazos.ballislife.util.NetworkUtils;
 import com.gmail.jorgegilcavazos.ballislife.util.Utilities;
@@ -59,11 +60,25 @@ public class HighlightsPresenter extends BasePresenter<HighlightsView> {
                     view.openPremiumActivity();
                 }));
 
-        disposables.add(view.gotItClicks()
+        disposables.add(view.premiumGotItClicks()
                 .subscribe(o -> {
                     localRepository.markSwishCardSeen(SwishCard.HIGHLIGHT_SORTING);
                     view.dismissSwishCard();
                 }));
+
+        disposables.add(view.shortcutClicks()
+                .subscribe(o -> {
+                    localRepository.markShortcutSeen(Constants.HIGHLIGHT_SHORTCUT_SEEN);
+                    view.dismissShortcutCard();
+                    view.openPremiumActivity();
+                }));
+
+        disposables.add(view.shortcutGotItClicks()
+                .subscribe(o -> {
+                    localRepository.markShortcutSeen(Constants.HIGHLIGHT_SHORTCUT_SEEN);
+                    view.dismissShortcutCard();
+                }));
+
     }
 
     @Override

@@ -46,5 +46,7 @@ public interface LocalRepository {
 
     void incrementScreenViewed(String key);
 
-    boolean shouldShowShortcutCard(String key);
+    boolean shouldShowShortcutCard(SwishCard swishCard);
+
+    void markShortcutSeen(String key);
 }

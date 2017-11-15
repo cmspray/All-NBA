@@ -47,7 +47,7 @@ public class HighlightsPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         when(mockView.explorePremiumClicks()).thenReturn(explorePremiumClicks);
-        when(mockView.gotItClicks()).thenReturn(gotItClicks);
+        when(mockView.premiumGotItClicks()).thenReturn(gotItClicks);
 
         presenter = new HighlightsPresenter(mockHighlightsRepository, mockLocalRepository,
                                             new TrampolineSchedulerProvider(),
@@ -69,7 +69,7 @@ public class HighlightsPresenterTest {
 
         verify(mockView).hideHighlights();
         verify(mockView).explorePremiumClicks();
-        verify(mockView).gotItClicks();
+        verify(mockView).premiumGotItClicks();
         verify(mockView).getSorting();
         verify(mockView).setLoadingIndicator(true);
         verify(mockView).resetScrollState();
@@ -93,7 +93,7 @@ public class HighlightsPresenterTest {
 
         verify(mockView).hideHighlights();
         verify(mockView).explorePremiumClicks();
-        verify(mockView).gotItClicks();
+        verify(mockView).premiumGotItClicks();
         verify(mockView).getSorting();
         verify(mockView).setLoadingIndicator(true);
         verify(mockView).resetScrollState();
@@ -118,7 +118,7 @@ public class HighlightsPresenterTest {
 
         verify(mockView).hideHighlights();
         verify(mockView).explorePremiumClicks();
-        verify(mockView).gotItClicks();
+        verify(mockView).premiumGotItClicks();
         verify(mockView).getSorting();
         verify(mockView).setLoadingIndicator(true);
         verify(mockView).resetScrollState();
@@ -141,7 +141,7 @@ public class HighlightsPresenterTest {
 
         verify(mockView).hideHighlights();
         verify(mockView).explorePremiumClicks();
-        verify(mockView).gotItClicks();
+        verify(mockView).premiumGotItClicks();
         verify(mockView).getSorting();
         verify(mockView).setLoadingIndicator(true);
         verify(mockView).resetScrollState();
@@ -164,7 +164,7 @@ public class HighlightsPresenterTest {
         presenter.loadHighlights(false);
 
         verify(mockView).explorePremiumClicks();
-        verify(mockView).gotItClicks();
+        verify(mockView).premiumGotItClicks();
         verify(mockHighlightsRepository).next();
         verify(mockView).showHighlights(highlightList, false);
         verify(mockView).hideSnackbar();
@@ -185,7 +185,7 @@ public class HighlightsPresenterTest {
         presenter.subscribeToHighlightsClick(highlightObservable);
 
         verify(mockView).explorePremiumClicks();
-        verify(mockView).gotItClicks();
+        verify(mockView).premiumGotItClicks();
         verify(mockView).openStreamable("abcde");
         verify(mockView).showUnknownSourceError();
         verify(mockView).openStreamable("fghi");
@@ -203,7 +203,7 @@ public class HighlightsPresenterTest {
         presenter.subscribeToSubmissionClick(highlightObservable);
 
         verify(mockView).explorePremiumClicks();
-        verify(mockView).gotItClicks();
+        verify(mockView).premiumGotItClicks();
         verify(mockView).onSubmissionClick(hl1);
         verifyNoMoreInteractions(mockView);
     }

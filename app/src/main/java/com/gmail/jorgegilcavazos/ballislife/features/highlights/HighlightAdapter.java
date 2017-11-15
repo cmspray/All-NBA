@@ -33,22 +33,27 @@ public class HighlightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<Highlight> highlights;
     private HighlightViewType highlightViewType;
     private boolean showSwishSortingCard;
+    private boolean showShortcutCard;
 
     private PublishSubject<Highlight> viewClickSubject = PublishSubject.create();
     private PublishSubject<Highlight> shareClickSubject = PublishSubject.create();
     private PublishSubject<Highlight> submissionClickSubject = PublishSubject.create();
     private PublishSubject<Object> exploreClicks = PublishSubject.create();
-    private PublishSubject<Object> gotItClicks = PublishSubject.create();
+    private PublishSubject<Object> shortcutClicks = PublishSubject.create();
+    private PublishSubject<Object> exploreGotItClicks = PublishSubject.create();
+    private PublishSubject<Object> shortcutGotItClicks = PublishSubject.create();
 
     public HighlightAdapter(
             Context context,
             List<Highlight> highlights,
             HighlightViewType highlightViewType,
-            boolean showSwishSortingCard) {
+            boolean showSwishSortingCard,
+            boolean showShortcutCard) {
         this.context = context;
         this.highlights = highlights;
         this.highlightViewType = highlightViewType;
         this.showSwishSortingCard = showSwishSortingCard;
+        this.showShortcutCard = showShortcutCard;
     }
 
     @Override
@@ -59,7 +64,8 @@ public class HighlightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (viewType == HighlightViewType.LARGE.getValue()) {
             view = inflater.inflate(R.layout.row_highlight, parent, false);
             return new HighlightHolder(view);
-        } else if (viewType == HighlightViewType.EDU_CARD.getValue()) {
+        } else if (viewType == HighlightViewType.EDU_CARD.getValue() ||
+                viewType == HighlightViewType.SHORTCUT_CARD.getValue()) {
             view = inflater.inflate(R.layout.swish_edu_card, parent, false);
             return new SwishCardViewHolder(view);
         } else {
@@ -81,9 +87,12 @@ public class HighlightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     viewClickSubject,
                     shareClickSubject,
                     submissionClickSubject);
-        } else if (holder instanceof SwishCardViewHolder) {
+        } else if (holder.getItemViewType() == HighlightViewType.EDU_CARD.getValue()) {
             ((SwishCardViewHolder) holder).bindData(
-                    SwishCard.HIGHLIGHT_SORTING, exploreClicks, gotItClicks);
+                    SwishCard.HIGHLIGHT_SORTING, exploreClicks, exploreGotItClicks);
+        } else if (holder.getItemViewType() == HighlightViewType.SHORTCUT_CARD.getValue()) {
+            ((SwishCardViewHolder) holder).bindData(
+                    SwishCard.HIGHLIGHT_SHORTCUT, shortcutClicks, shortcutGotItClicks);
         } else {
             throw new IllegalStateException("Invalid holder type: " + holder.toString()
                     + " at position " + position);
@@ -94,6 +103,8 @@ public class HighlightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         if (showSwishSortingCard && position == 0) {
             return HighlightViewType.EDU_CARD.getValue();
+        } else if(showShortcutCard && position == 0) {
+            return HighlightViewType.SHORTCUT_CARD.getValue();
         }
         return highlightViewType.getValue();
     }
@@ -102,12 +113,19 @@ public class HighlightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemCount() {
         if (showSwishSortingCard) {
             return null != highlights ? highlights.size() + 1 : 1;
+        } else if(showShortcutCard) {
+            return null != highlights ? highlights.size() + 1 : 1;
         }
         return null != highlights ? highlights.size() : 0;
     }
 
     public void removeSortingCard() {
         showSwishSortingCard = false;
+        notifyItemRemoved(0);
+    }
+
+    public void removeShortcutCard() {
+        showShortcutCard = false;
         notifyItemRemoved(0);
     }
 
@@ -157,8 +175,16 @@ public class HighlightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return exploreClicks;
     }
 
-    public Observable<Object> getGotItClicks() {
-        return gotItClicks;
+    public Observable<Object> getExploreGotItClicks() {
+        return exploreGotItClicks;
+    }
+
+    public PublishSubject<Object> getShortcutClicks() {
+        return shortcutClicks;
+    }
+
+    public PublishSubject<Object> getShortcutGotItClicks() {
+        return shortcutGotItClicks;
     }
 
     static class HighlightHolder extends RecyclerView.ViewHolder {

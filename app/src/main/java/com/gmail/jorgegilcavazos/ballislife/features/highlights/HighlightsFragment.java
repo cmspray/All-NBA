@@ -98,7 +98,8 @@ public class HighlightsFragment extends Fragment implements HighlightsView,
                 getActivity(),
                 new ArrayList<>(25),
                 viewType,
-                shouldShowSortingCard());
+                shouldShowSortingCard(),
+                shouldShowShortcutCard());
 
         setHasOptionsMenu(true);
     }
@@ -370,8 +371,18 @@ public class HighlightsFragment extends Fragment implements HighlightsView,
     }
 
     @Override
-    public Observable<Object> gotItClicks() {
-        return highlightAdapter.getGotItClicks();
+    public Observable<Object> premiumGotItClicks() {
+        return highlightAdapter.getExploreGotItClicks();
+    }
+
+    @Override
+    public Observable<Object> shortcutClicks() {
+        return highlightAdapter.getShortcutClicks();
+    }
+
+    @Override
+    public Observable<Object> shortcutGotItClicks() {
+        return highlightAdapter.getShortcutGotItClicks();
     }
 
     @Override
@@ -381,8 +392,18 @@ public class HighlightsFragment extends Fragment implements HighlightsView,
     }
 
     @Override
+    public void openShortcutActivity() {
+        //todo
+    }
+
+    @Override
     public void dismissSwishCard() {
         highlightAdapter.removeSortingCard();
+    }
+
+    @Override
+    public void dismissShortcutCard() {
+        highlightAdapter.removeShortcutCard();
     }
 
     private void openViewPickerDialog() {
@@ -458,5 +479,9 @@ public class HighlightsFragment extends Fragment implements HighlightsView,
     private boolean shouldShowSortingCard() {
         boolean sortingCardSeen = localRepository.swishCardSeen(SwishCard.HIGHLIGHT_SORTING);
         return !sortingCardSeen && !isPremium();
+    }
+
+    private boolean shouldShowShortcutCard() {
+        return localRepository.shouldShowShortcutCard(SwishCard.HIGHLIGHT_SHORTCUT);
     }
 }
