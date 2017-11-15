@@ -52,6 +52,11 @@ public class Constants {
     public static final int POSTS_VIEW_WIDE_CARD = 1;
     public static final int POSTS_VIEW_LIST = 2;
 
+    public static final String HIGHLIGHTS_VIEWED_COUNT_KEY = "highlights_viewed";
+    public static final String GAMES_VIEWED_COUNT_KEY = "games_viewed";
+    public static final String R_NBA_VIEWED_COUNT_KEY = "r_nba_viewed";
+    public static final String STANDINGS_VIEWED_COUNT_KEY = "standings_viewed";
+
     // Premium IAP
     public static final String PREMIUM_PRODUCT_ID = "premium";
 

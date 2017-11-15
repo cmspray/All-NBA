@@ -2,6 +2,7 @@ package com.gmail.jorgegilcavazos.ballislife.data.local;
 
 import android.content.SharedPreferences;
 
+import com.gmail.jorgegilcavazos.ballislife.base.BasePresenter;
 import com.gmail.jorgegilcavazos.ballislife.features.model.HighlightViewType;
 import com.gmail.jorgegilcavazos.ballislife.features.model.SwishCard;
 import com.gmail.jorgegilcavazos.ballislife.features.model.SwishTheme;
@@ -161,5 +162,18 @@ public class AppLocalRepository implements LocalRepository {
             return null;
         }
         return team;
+    }
+
+    @Override
+    public void incrementScreenViewed(String key) {
+        SharedPreferences.Editor editor = localSharedPreferences.edit();
+        int timesSeen = localSharedPreferences.getInt(key, 0) + 1;
+        editor.putInt(key, timesSeen);
+        editor.apply();
+    }
+
+    @Override
+    public boolean shouldShowShortcutCard(String key) {
+        return localSharedPreferences.getInt(key, 0) >= 10;
     }
 }

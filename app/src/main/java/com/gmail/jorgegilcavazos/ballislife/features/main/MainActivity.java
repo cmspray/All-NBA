@@ -64,6 +64,11 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import jonathanfinerty.once.Once;
 
+import static com.gmail.jorgegilcavazos.ballislife.util.Constants.GAMES_VIEWED_COUNT_KEY;
+import static com.gmail.jorgegilcavazos.ballislife.util.Constants.HIGHLIGHTS_VIEWED_COUNT_KEY;
+import static com.gmail.jorgegilcavazos.ballislife.util.Constants.R_NBA_VIEWED_COUNT_KEY;
+import static com.gmail.jorgegilcavazos.ballislife.util.Constants.STANDINGS_VIEWED_COUNT_KEY;
+
 public class MainActivity extends BaseNoActionBarActivity {
     private static final String TAG = "MainActivity";
 
@@ -284,6 +289,7 @@ public class MainActivity extends BaseNoActionBarActivity {
                     return true;
                 case R.id.navigation_item_3:
                     setPostsFragment("NBA");
+                    localRepository.incrementScreenViewed(R_NBA_VIEWED_COUNT_KEY);
                     drawerLayout.closeDrawer(GravityCompat.START);
                     return true;
                 case R.id.navigation_item_4:
@@ -450,6 +456,7 @@ public class MainActivity extends BaseNoActionBarActivity {
 
         expandToolbar();
         selectedFragment = GAMES_FRAGMENT_ID;
+        localRepository.incrementScreenViewed(GAMES_VIEWED_COUNT_KEY);
     }
 
     public void setStandingsFragment() {
@@ -475,6 +482,7 @@ public class MainActivity extends BaseNoActionBarActivity {
 
         expandToolbar();
         selectedFragment = STANDINGS_FRAGMENT_ID;
+        localRepository.incrementScreenViewed(STANDINGS_VIEWED_COUNT_KEY);
     }
 
     public void setPostsFragment(String subreddit) {
@@ -527,6 +535,7 @@ public class MainActivity extends BaseNoActionBarActivity {
 
         expandToolbar();
         selectedFragment = HIGHLIGHTS_FRAGMENT_ID;
+        localRepository.incrementScreenViewed(HIGHLIGHTS_VIEWED_COUNT_KEY);
     }
 
     private void loadRedditUsername() {

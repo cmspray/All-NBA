@@ -43,4 +43,8 @@ public interface LocalRepository {
     void markSwishCardSeen(SwishCard swishCard);
 
     String getFavoriteTeam();
+
+    void incrementScreenViewed(String key);
+
+    boolean shouldShowShortcutCard(String key);
 }
